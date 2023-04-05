@@ -232,6 +232,14 @@ const Text = styled.div<any>`
 const InnerText = styled.div`
   padding: 0;
   margin: 0;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   p {
     margin: 0;
