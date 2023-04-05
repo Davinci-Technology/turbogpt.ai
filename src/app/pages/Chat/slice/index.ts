@@ -21,11 +21,14 @@ import {
   getSelectedCharacter,
   saveSelectedCharacter,
 } from '../utils';
+import * as process from "process";
+
+console.log('keys is ', process.env.REACT_APP_OPENAI_KEY);
 
 export const initialState: ChatOptionsState = {
   selectedCharacter: getSelectedCharacter() || 'Default AI',
   chatMood: 50,
-  openAiApiKey: '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',
+  openAiApiKey: process.env.REACT_APP_OPENAI_KEY || '',
   openAiKeyStatus: true,
   apiPrevKey: '',
   generateName: getCustomUser() === 'true' || false,
