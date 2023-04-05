@@ -31,3 +31,7 @@ generated-cra-app
 .cra-template-rb
 template
 .eslintcache
+
+.env.local
+.env.development
+.env.production
