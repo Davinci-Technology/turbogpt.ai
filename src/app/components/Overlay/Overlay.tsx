@@ -15,7 +15,7 @@ import { Conversations } from 'app/pages/Chat/components/Conversations';
 import CustomPrompts from 'app/pages/Chat/components/CustomPrompts';
 
 export function Overlay({ isOpened = false }: { isOpened: boolean }) {
-  const [selectedTab, setSelectedTab] = React.useState<number>(0);
+  const [selectedTab, setSelectedTab] = React.useState<number>(1);
   const apiKeyVerifying = useSelector(getVerifyingApiKey);
 
   const handleTabChange = (value: string) => {
@@ -38,11 +38,10 @@ export function Overlay({ isOpened = false }: { isOpened: boolean }) {
             { label: 'Convos', value: '1' },
           ]}
         />
-        <Title>🤯 {selectedTab === 0 ? 'Options' : 'Convos'}</Title>
+        <Title>{selectedTab === 0 ? 'Options' : 'Convos'}</Title>
         {selectedTab === 0 && (
           <>
             <ThemeSwitch />
-            <Divider my="md" variant="dashed" />
             <APIKey />
             <Divider my="md" variant="dashed" />
             <SelectCharacter />
@@ -59,41 +58,6 @@ export function Overlay({ isOpened = false }: { isOpened: boolean }) {
             <Conversations />
           </>
         )}
-        <Footer>
-          <div className="items">
-            <Item
-              href="https://ko-fi.com/mikepechousek"
-              target="_blank"
-              title="Buy me a coffee"
-            >
-              Buy me a coffee
-            </Item>
-            <Item
-              href="https://twitter.com/turbogpt"
-              target="_blank"
-              title="Twitter Page"
-              rel="noopener noreferrer"
-            >
-              <TwitterIcon width={18} style={{ marginRight: 5 }} />
-              Twitter
-            </Item>
-            <Item
-              href="https://hccar8zm06k.typeform.com/to/An6RHMdE"
-              target="_blank"
-            >
-              <IconBulb width={18} style={{ marginRight: 5 }} />
-              Idea
-            </Item>
-          </div>
-          <Love>
-            Made with{' '}
-            <IconHeartFilled
-              size={12}
-              style={{ margin: '0 5px', color: 'red' }}
-            />{' '}
-            in Montreal
-          </Love>
-        </Footer>
       </Inner>
     </Wrapper>
   );

@@ -27,15 +27,14 @@ export function Conversations() {
         size="lg"
         fullWidth
         variant="light"
-        disabled={conversations.length >= 8}
+        disabled={conversations.length >= 20}
       >
         New Conversation
       </Button>
       <Divider variant="dashed" my="md" />
       {conversations.map((conversation, index) => (
-        <ButtonWrap>
+        <ButtonWrap key={`open-${index}`}>
           <Button
-            key={index}
             color="red"
             mr="sm"
             size="md"
@@ -49,6 +48,7 @@ export function Conversations() {
               : 'Empty Conversation'}
           </Button>
           <CloseButton
+              key={`close-${index}`}
             disabled={conversations.length <= 1}
             onClick={() => dispatch(actions.removeConversation(index))}
             variant="light"

@@ -13,7 +13,7 @@ import { StyleConstants } from 'styles/StyleConstants';
 import CustomPrompts from './CustomPrompts';
 
 export function LeftSidebar() {
-  const [selectedTab, setSelectedTab] = React.useState<number>(0);
+  const [selectedTab, setSelectedTab] = React.useState<number>(1);
   const apiKeyVerifying = useSelector(getVerifyingApiKey);
 
   const handleTabChange = (value: string) => {
@@ -24,7 +24,7 @@ export function LeftSidebar() {
     <Wrapper>
       <Inner>
         <TitleWrapper>
-          <Title>🤯 {selectedTab === 0 ? 'Options' : 'Convos'}</Title>
+          <Title>{selectedTab === 0 ? 'Options' : 'Convos'}</Title>
           <SegmentedControl
             disabled={apiKeyVerifying}
             size="xs"
@@ -41,7 +41,7 @@ export function LeftSidebar() {
         {selectedTab === 0 && (
           <>
             <APIKey />
-            <Divider my="md" variant="dashed" />
+
             <SelectCharacter />
             <Divider my="md" variant="dashed" />
             <CustomPrompts />
@@ -56,14 +56,6 @@ export function LeftSidebar() {
             <Conversations />
           </>
         )}
-        <Love>
-          Made with{' '}
-          <IconHeartFilled
-            size={16}
-            style={{ margin: '0 5px', color: 'red' }}
-          />{' '}
-          in Montreal
-        </Love>
       </Inner>
     </Wrapper>
   );

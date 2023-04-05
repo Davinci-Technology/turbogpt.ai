@@ -1,32 +1,43 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
 import ConfettiExplosion from 'react-confetti-explosion';
-import { useMediaQuery } from 'react-responsive';
-import { ReactComponent as LogoIcon } from './assets/logo.svg';
-import { useSelector } from 'react-redux';
-import { getModel } from 'app/pages/Chat/slice/selectors';
+import {useMediaQuery} from 'react-responsive';
+import {ReactComponent as LogoIcon} from '../../../../public/DTS_logo-final_logo_only-fit.svg';
+import {useSelector} from 'react-redux';
+import {getModel} from 'app/pages/Chat/slice/selectors';
 
 export function Logo() {
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
-  const model = useSelector(getModel);
+    const isTabletOrMobile = useMediaQuery({query: '(max-width: 1024px)'});
+    const model = useSelector(getModel);
 
-  return (
-    <Wrapper>
-      <Title>
-        <LogoIcon
-          width={25}
-          height={25}
-          style={{ marginBottom: '5px', imageRendering: 'crisp-edges' }}
-        />{' '}
-        TurboGPT
-      </Title>
-      {!isTabletOrMobile && (
-        <Description>
-          model: <span>{model === 'gpt-4' ? 'gpt-4' : 'gpt-3.5-turbo'}</span>
-        </Description>
-      )}
-    </Wrapper>
-  );
+    return (
+        <Wrapper>
+            <Title>
+
+                <img src={'DTS_logo-final_logo_only-fit.svg'} alt="logo" style={{
+                    width: '35px',
+                    height: '35px',
+                    marginBottom: '5px',
+                    marginRight: '10px',
+                    imageRendering: 'crisp-edges'
+                }}/>
+
+                {/*<LogoIcon*/}
+                {/*  width={25}*/}
+                {/*  height={25}*/}
+                {/*  style={{ marginBottom: '5px', imageRendering: 'crisp-edges' }}*/}
+                {/*/>{' '}*/}
+
+
+                Chad-GPT
+            </Title>
+            {!isTabletOrMobile && (
+                <Description>
+                    model: <span>{model === 'gpt-4' ? 'gpt-4' : 'gpt-3.5-turbo'}</span>
+                </Description>
+            )}
+        </Wrapper>
+    );
 }
 
 const Wrapper = styled.div`

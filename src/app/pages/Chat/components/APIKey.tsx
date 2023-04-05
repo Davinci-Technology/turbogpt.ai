@@ -105,31 +105,31 @@ export function APIKey() {
 
   return (
     <Wrapper>
-      <PasswordInput
-        withAsterisk
-        radius="sm"
-        size="xs"
-        onChange={e => setApiKey(e.target.value)}
-        value={apiKey}
-        style={{ width: '100%' }}
-        error={isError ? 'Invalid API Key' : error}
-        placeholder="OpenAI API Key"
-        variant="filled"
-        icon={generateIcon()}
-        label="OpenAI API Key"
-        description={
-          <>
-            We never save your API key. It is only used to communicate with
-            OpenAI's servers.{' '}
-            <Link
-              target="_blank"
-              href="https://platform.openai.com/account/api-keys"
-            >
-              get it here!
-            </Link>
-          </>
-        }
-      />
+      {/*<PasswordInput*/}
+      {/*  withAsterisk*/}
+      {/*  radius="sm"*/}
+      {/*  size="xs"*/}
+      {/*  onChange={e => setApiKey(e.target.value)}*/}
+      {/*  value={apiKey}*/}
+      {/*  style={{ width: '100%' }}*/}
+      {/*  error={isError ? 'Invalid API Key' : error}*/}
+      {/*  placeholder="OpenAI API Key"*/}
+      {/*  variant="filled"*/}
+      {/*  icon={generateIcon()}*/}
+      {/*  label="OpenAI API Key"*/}
+      {/*  description={*/}
+      {/*    <>*/}
+      {/*      We never save your API key. It is only used to communicate with*/}
+      {/*      OpenAI's servers.{' '}*/}
+      {/*      <Link*/}
+      {/*        target="_blank"*/}
+      {/*        href="https://platform.openai.com/account/api-keys"*/}
+      {/*      >*/}
+      {/*        get it here!*/}
+      {/*      </Link>*/}
+      {/*    </>*/}
+      {/*  }*/}
+      {/*/>*/}
     </Wrapper>
   );
 }

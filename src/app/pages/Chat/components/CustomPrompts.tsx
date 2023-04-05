@@ -22,7 +22,7 @@ function CustomPrompts() {
         <NativeSelect
           className="native-select"
           value={prompt.act}
-          defaultValue="None"
+//          defaultValue="None"
           onChange={event => console.log(event)}
           data={[
             ...preMadePrompts.map(p => p.act),

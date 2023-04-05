@@ -25,15 +25,15 @@ import {
 export const initialState: ChatOptionsState = {
   selectedCharacter: getSelectedCharacter() || 'Default AI',
   chatMood: 50,
-  openAiApiKey: getOpenAiKeyFromStorage() || '',
-  openAiKeyStatus: false,
+  openAiApiKey: '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',
+  openAiKeyStatus: true,
   apiPrevKey: '',
   generateName: getCustomUser() === 'true' || false,
   verifyingApiKey: false,
   messages: getMessagesInLocalStorage() || [],
   conversations: getConversationsFromStorage() || [],
   selectedConversation: 0,
-  model: getModelFromStorage() || 'gpt-3.5-turbo',
+  model: getModelFromStorage() || 'gpt-4',
   customPrompt: getSelectedPrompt() || {
     prompt: '',
     act: '',

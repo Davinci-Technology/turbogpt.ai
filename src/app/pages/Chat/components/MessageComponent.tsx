@@ -200,7 +200,7 @@ const Message = styled.div`
   margin-top: 15px;
 `;
 
-const Text = styled.p<any>`
+const Text = styled.div<any>`
   margin: 0 10px;
   color: #f3f3f3;
   background-color: ${props => props.theme.chatBubbleSystem};
@@ -229,7 +229,7 @@ const Text = styled.p<any>`
   }
 `;
 
-const InnerText = styled.p`
+const InnerText = styled.div`
   padding: 0;
   margin: 0;
 
