@@ -1,94 +1,99 @@
 import React from 'react';
-import { ActionIcon, Button, Textarea as MantineInput } from '@mantine/core';
+import {ActionIcon, Button, Textarea as MantineInput, Progress} from '@mantine/core';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { getOpenAiKeyStatus, getVerifyingApiKey } from '../slice/selectors';
-import { useMediaQuery } from 'react-responsive';
-import { IconRefresh } from '@tabler/icons-react';
+import {useSelector} from 'react-redux';
+import {getOpenAiKeyStatus, getVerifyingApiKey} from '../slice/selectors';
+import {useMediaQuery} from 'react-responsive';
+import {IconRefresh} from '@tabler/icons-react';
 
 export function Input({
-  addMessage,
-  disabled = false,
-  handleRegen,
-  canRegen = false,
-  text,
-}: {
-  addMessage: (message: string) => void;
-  handleRegen: () => void;
-  disabled: boolean;
-  canRegen: boolean;
-  text: string;
+                          addMessage,
+                          disabled = false,
+                          handleRegen,
+                          canRegen = false,
+                          text,
+                          progress,
+                      }: {
+    addMessage: (message: string) => void;
+    handleRegen: () => void;
+    disabled: boolean;
+    canRegen: boolean;
+    text: string;
+    progress: number;
 }) {
-  const [message, setMessage] = React.useState<string>('');
-  const apiKeyStatus = useSelector(getOpenAiKeyStatus);
-  const apiKeyVerifiying = useSelector(getVerifyingApiKey);
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+    const [message, setMessage] = React.useState<string>('');
+    const apiKeyStatus = useSelector(getOpenAiKeyStatus);
+    const apiKeyVerifiying = useSelector(getVerifyingApiKey);
+    const isTabletOrMobile = useMediaQuery({query: '(max-width: 1024px)'});
 
-  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    if (disabled) {
-      return;
-    }
+        if (disabled) {
+            return;
+        }
 
-    addMessage(message);
-    setMessage('');
-  };
+        addMessage(message);
+        setMessage('');
+    };
 
-  // Listen for enter key on textarea
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // If holding shift + enter
-    if (!e.shiftKey && e.key === 'Enter') {
-      handleSubmitForm(e as any);
-    }
-  };
+    // Listen for enter key on textarea
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        // If holding shift + enter
+        if (!e.shiftKey && e.key === 'Enter') {
+            handleSubmitForm(e as any);
+        }
+    };
 
-  return (
-    <Wrapper>
-      <InputWrapper
-        isMobile={isTabletOrMobile}
-        onSubmit={e => handleSubmitForm(e)}
-      >
-        <MantineInput
-          disabled={!apiKeyStatus || apiKeyVerifiying}
-          radius="md"
-          size={isTabletOrMobile ? 'md' : 'lg'}
-          onChange={e => setMessage(e.target.value)}
-          value={message}
-          style={{ width: '100%' }}
-          placeholder="Type your message here"
-          onKeyDown={e => handleKeyDown(e)}
-          minRows={1}
-          maxRows={3}
-          autosize={true}
-        />
-        <Button
-          disabled={!apiKeyStatus || disabled || apiKeyVerifiying}
-          type="submit"
-          size={isTabletOrMobile ? 'md' : 'lg'}
-          left={5}
-          radius="md"
-          variant="light"
-          color="indigo"
-        >
-          {text}
-        </Button>
-        <Button
-          onClick={() => handleRegen()}
-          disabled={!apiKeyStatus || disabled || apiKeyVerifiying || !canRegen}
-          type="button"
-          size={isTabletOrMobile ? 'md' : 'lg'}
-          variant="filled"
-          radius="md"
-          ml={10}
-          color="red"
-          style={{ padding: '0 10px' }}
-        >
-          <IconRefresh />
-        </Button>
-      </InputWrapper>
-    </Wrapper>
-  );
+    return (
+        <>
+            <Wrapper>
+                <InputWrapper
+                    isMobile={isTabletOrMobile}
+                    onSubmit={e => handleSubmitForm(e)}
+                >
+                    <MantineInput
+                        disabled={!apiKeyStatus || apiKeyVerifiying}
+                        radius="md"
+                        size={isTabletOrMobile ? 'md' : 'lg'}
+                        onChange={e => setMessage(e.target.value)}
+                        value={message}
+                        style={{width: '100%'}}
+                        placeholder="Type your message here"
+                        onKeyDown={e => handleKeyDown(e)}
+                        minRows={1}
+                        maxRows={3}
+                        autosize={true}
+                    />
+                    <Button
+                        disabled={!apiKeyStatus || disabled || apiKeyVerifiying}
+                        type="submit"
+                        size={isTabletOrMobile ? 'md' : 'lg'}
+                        left={5}
+                        radius="md"
+                        variant="light"
+                        color="indigo"
+                    >
+                        {text}
+                    </Button>
+                    <Button
+                        onClick={() => handleRegen()}
+                        disabled={!apiKeyStatus || disabled || apiKeyVerifiying || !canRegen}
+                        type="button"
+                        size={isTabletOrMobile ? 'md' : 'lg'}
+                        variant="filled"
+                        radius="md"
+                        ml={10}
+                        color="red"
+                        style={{padding: '0 10px'}}
+                    >
+                        <IconRefresh/>
+                    </Button>
+                </InputWrapper>
+            </Wrapper>
+            <Progress value={progress} w={'100%'} h={10}/>
+        </>
+    );
 }
 
 const Wrapper = styled.div`
