@@ -50,11 +50,13 @@ export function Textbox() {
             count += encode(message.content).length;
         });
 
+        console.log('selected model is ', modelSelected);
         let maxTokens = 7 * 1024;
         if (modelSelected === 'gpt-3.5-turbo-16k-0613') {
             maxTokens = 15 * 1024;
         }
 
+        console.log('max tokens is ', maxTokens);
         let p = (count / maxTokens) * 100.0;
         console.log('progress is ', p);
         setProgress(p);

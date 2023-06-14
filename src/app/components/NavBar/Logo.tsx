@@ -33,7 +33,7 @@ export function Logo() {
             </Title>
             {!isTabletOrMobile && (
                 <Description>
-                    model: <span>{model === 'gpt-4-0613' ? 'gpt-4-0613' : 'gpt-3.5-turbo-16k'}</span>
+                    model: <span>{model === 'gpt-4-0613' ? 'gpt-4-0613' : 'gpt-3.5-turbo-16k-0613'}</span>
                 </Description>
             )}
         </Wrapper>
