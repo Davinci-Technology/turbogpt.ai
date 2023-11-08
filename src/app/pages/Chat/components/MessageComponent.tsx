@@ -40,6 +40,9 @@ export const MessageComponent = ({
     color: 'indigo',
   };
 
+  let blockindex = 0;
+  const messageindex = Math.floor(Math.random() * 1000000);
+
   const characterSelected = useSelector(getCharacter);
   const [showActions, setShowActions] = React.useState(false);
 
@@ -53,13 +56,21 @@ export const MessageComponent = ({
     let lastIndex = 0;
     let match: RegExpExecArray | null;
 
-    while ((match = codeRegex.exec(message)) !== null) {
+    // // check if the message contains an odd number of tripple backticks and add a closing tripple backtick if it does
+    if (message.split('```').length % 2 === 0) {
+        if (typeof message === 'string') {
+             message = message + '```';
+        }
+    }
+
+    let messageString = message as string;
+    while ((match = codeRegex.exec(messageString)) !== null) {
       // Add the part of the message before the matched code
       if (match.index > lastIndex) {
-        const textBeforeCode = message.slice(lastIndex, match.index);
+        const textBeforeCode = messageString.slice(lastIndex, match.index);
         // Split the text before the code block by newline characters and wrap each line in a <p> element
         const textLines = textBeforeCode.split('\n').map((line, index) => (
-          <InnerText key={index}>
+          <InnerText key={`before-${messageindex}-${blockindex}-${index}`}>
             <ReactMarkdown
               components={{
                 h1: 'h2',
@@ -75,7 +86,7 @@ export const MessageComponent = ({
       }
       // Add the <Code> component with the wrapped lines
       parts.push(
-        <CodeWrapper>
+        <CodeWrapper key={`code-${messageindex}-${blockindex}-${match.index}`}>
           <Prism
             className="prism"
             withLineNumbers
@@ -87,14 +98,15 @@ export const MessageComponent = ({
         </CodeWrapper>,
       );
       lastIndex = codeRegex.lastIndex;
+      blockindex++;
     }
 
     // Add the remaining part of the message
-    if (lastIndex < message.length) {
-      const remainingText = message.slice(lastIndex);
+    if (lastIndex < messageString.length) {
+      const remainingText = messageString.slice(lastIndex);
       // Split the remaining text by newline characters and wrap each line in a <p> element
       const remainingLines = remainingText.split('\n').map((line, index) => (
-        <InnerText key={index}>
+        <InnerText key={`after-${messageindex}-${blockindex}-${index}`}>
           <ReactMarkdown
             components={{
               h1: 'h2',

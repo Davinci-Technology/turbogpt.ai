@@ -23,7 +23,7 @@ import {
 } from '../utils';
 import * as process from "process";
 
-console.log('keys is ', process.env.REACT_APP_OPENAI_KEY);
+//console.log('keys is ', process.env.REACT_APP_OPENAI_KEY);
 
 export const initialState: ChatOptionsState = {
   selectedCharacter: getSelectedCharacter() || 'Default AI',
@@ -36,7 +36,7 @@ export const initialState: ChatOptionsState = {
   messages: getMessagesInLocalStorage() || [],
   conversations: getConversationsFromStorage() || [],
   selectedConversation: 0,
-  model: getModelFromStorage() || 'gpt-4-0613',
+  model: getModelFromStorage() || 'gpt-4-1106-preview',
   customPrompt: getSelectedPrompt() || {
     prompt: '',
     act: '',

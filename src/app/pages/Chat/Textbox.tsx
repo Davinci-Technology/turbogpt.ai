@@ -43,22 +43,25 @@ export function Textbox() {
     const isTabletOrMobile = useMediaQuery({query: '(max-width: 1024px)'});
 
     useEffect(() => {
-        console.log('messages changed', messages);
+ //       console.log('messages changed', messages);
         let count = 0;
         // count the total number of tokens in all the messages
         messages.forEach((message) => {
             count += encode(message.content).length;
         });
 
-        console.log('selected model is ', modelSelected);
+//        console.log('selected model is ', modelSelected);
         let maxTokens = 7 * 1024;
         if (modelSelected === 'gpt-3.5-turbo-16k-0613') {
             maxTokens = 15 * 1024;
         }
+        if (modelSelected === 'gpt-4-1106-preview') {
+            maxTokens = 120 * 1024;
+        }
 
-        console.log('max tokens is ', maxTokens);
+//        console.log('max tokens is ', maxTokens);
         let p = (count / maxTokens) * 100.0;
-        console.log('progress is ', p);
+//        console.log('progress is ', p);
         setProgress(p);
     }, [messages]);
 
@@ -114,7 +117,7 @@ export function Textbox() {
     };
 
     const addMessage = (message: string) => {
-        console.log('isLoading', isLoading, 'isRefetching', isRefetching);
+    //    console.log('isLoading', isLoading, 'isRefetching', isRefetching);
         if (isLoading || isRefetching) {
             stopRequest = true;
             return;

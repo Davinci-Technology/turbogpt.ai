@@ -13,7 +13,6 @@ export function Logo() {
     return (
         <Wrapper>
             <Title>
-
                 <img src={'DTS_logo-final_logo_only-fit.svg'} alt="logo" style={{
                     width: '35px',
                     height: '35px',
@@ -21,19 +20,11 @@ export function Logo() {
                     marginRight: '10px',
                     imageRendering: 'crisp-edges'
                 }}/>
-
-                {/*<LogoIcon*/}
-                {/*  width={25}*/}
-                {/*  height={25}*/}
-                {/*  style={{ marginBottom: '5px', imageRendering: 'crisp-edges' }}*/}
-                {/*/>{' '}*/}
-
-
                 Chad-GPT
             </Title>
             {!isTabletOrMobile && (
                 <Description>
-                    model: <span>{model === 'gpt-4-0613' ? 'gpt-4-0613' : 'gpt-3.5-turbo-16k-0613'}</span>
+                    model: <span>{model}</span>
                 </Description>
             )}
         </Wrapper>

@@ -22,11 +22,12 @@ export const checkOpenAiKeyValid = (key: string, model: string) =>
 const fetchMessage = (key: string, messages: Message[], model: ApiModel) => {
     return fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
+//        mode: 'no-cors',
         headers: {
             Authorization: `Bearer ${key}`,
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
-            referrer: 'https://turbogpt.ai/',
+//            referrer: 'https://turbogpt.ai/',
         },
         body: JSON.stringify({
             stream: true,
@@ -45,31 +46,27 @@ export const sendMessage = async function* (
     customPrompt: CustomPrompt,
 ) {
 
-
-
     let copy = [...messages];
 
-    // if (model === 'gpt-4') {
-    //   if (copy.length > 12) {
-    //     copy = copy.slice(copy.length - 12, copy.length);
-    //   }
-    // }
-    //
-    // if (model === 'gpt-3.5-turbo') {
-    //   if (copy.length > 8) {
-    //     copy = copy.slice(copy.length - 8, copy.length);
-    //   }
-    // }
+    function updateSystemMessages(messages, newMessage): Message[] {
+        if (messages[0].role === 'system') {
+            messages[0].content = messages[0].content + "\n" + newMessage;
+        }
+        else {
+            messages = [
+                {role: 'system', content: newMessage},
+                ...messages,
+            ];
+        }
+        return messages;
+    }
 
     if (
         characterPrompts[characterSelected] &&
         characterSelected !== 'Default AI'
     ) {
-        console.log('--- Selected Character... Adding to messages... ---');
-        copy = [
-            {role: 'system', content: characterPrompts[characterSelected]},
-            ...copy,
-        ];
+//        console.log('--- Selected Character... Adding to messages... ---');
+        copy = updateSystemMessages(copy, characterPrompts[characterSelected]);
     }
 
     if (mood !== 50) {
@@ -101,43 +98,25 @@ export const sendMessage = async function* (
             prompt =
                 'I want you to be the classiest bot alive. Every single thing you answer should be answered as such.';
         }
-        console.log('--- Selected Mood... Adding to messages... ---');
-        copy = [
-            {
-                role: 'system',
-                content: prompt,
-            },
-            ...copy,
-        ];
+//        console.log('--- Selected Mood... Adding to messages... ---');
+        copy = updateSystemMessages(copy, prompt);
     }
 
     if (customPrompt && customPrompt.act !== 'None') {
-        console.log('--- Selected Custom Prompt... Adding to messages... ---');
-        copy = [
-            {
-                role: 'system',
-                content: `YOU MUST ACT LIKE THE FOLLOWING, DO NOT BREAK CHARACTER: ${customPrompt.prompt}`,
-            },
-            ...copy,
-        ];
+ //       console.log('--- Selected Custom Prompt... Adding to messages... ---');
+        let data = `YOU MUST ACT LIKE THE FOLLOWING, DO NOT BREAK CHARACTER: ${customPrompt.prompt}`
+        copy = updateSystemMessages(copy, data);
     }
 
 // Add markdown support
-    copy = [
-        {
-            role: 'system',
-            content:
-                "Use markdown to format all your answers. (Don't mention it to the other user).",
-        },
-        ...copy,
-    ];
+    copy = updateSystemMessages(copy, "Use markdown to format all your answers. (Don't mention it to the other user).")
 
     const countTokens = (messages) => {
         let count = 0;
         for (let i = 0; i < messages.length; i++) {
             count += encode(messages[i].content).length;
         }
-        console.log('counted tokens: ', count);
+ //       console.log('counted tokens: ', count);
         return count;
     }
 
@@ -148,16 +127,19 @@ export const sendMessage = async function* (
     if (model === 'gpt-3.5-turbo-16k-0613') {
         permittedTokens = 15360;
     }
+    if (model === 'gpt-4-1106-preview') {
+        permittedTokens = 120*1024
+    }
 
     while (countTokens(copy) > permittedTokens) {
         // remove the first message that is not a system message
         for (let i = 0; i < copy.length; i++) {
             if (copy[i].role !== 'system') {
                 let count = encode(copy[i].content).length;
-                console.log('removing message with tokens: ', count);
+    //            console.log('removing message with tokens: ', count);
                 copy.splice(i, 1);
 
-                console.log('copy is now ', copy);
+     //           console.log('copy is now ', copy);
 
                 break;
             }
