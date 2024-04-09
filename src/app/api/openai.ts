@@ -130,6 +130,9 @@ export const sendMessage = async function* (
     if (model === 'gpt-4-1106-preview') {
         permittedTokens = 120*1024
     }
+    if (model === 'gpt-4-turbo-2024-04-09') {
+        permittedTokens = 120*1024
+    }
 
     while (countTokens(copy) > permittedTokens) {
         // remove the first message that is not a system message
