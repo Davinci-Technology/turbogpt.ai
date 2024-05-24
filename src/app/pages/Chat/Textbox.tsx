@@ -58,6 +58,9 @@ export function Textbox() {
         if (modelSelected === 'gpt-4-1106-preview') {
             maxTokens = 120 * 1024;
         }
+        if (modelSelected === 'gpt-4o') {
+            maxTokens = 120 * 1024;
+        }
         if (modelSelected === 'gpt-4-turbo-2024-04-09') {
             maxTokens = 120 * 1024;
         }
